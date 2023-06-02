@@ -1,9 +1,12 @@
-import Dart from './dart';
+import Dart from "./dart";
+import Dartboard from "./dartboard";
 
-const Icon = props => {
+const Icon = (props) => {
   switch (props.name) {
-    case 'dart':
+    case "dart":
       return <Dart {...props} />;
+    case "dartboard":
+      return <Dartboard {...props} />;
     default:
       return;
   }

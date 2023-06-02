@@ -8,6 +8,19 @@ import "./playing.scss";
 const Playing = () => {
   const { gameState, setGameState } = useContext(GameStateContext);
 
+  const handleExit = () => {
+    setGameState({
+      activeScores: [false, false, false],
+      continueButtonDisabled: true,
+      currentGame: [],
+      gameHistory: [],
+      gameNumber: 1,
+      gameStats: [],
+      roundNumber: 1,
+      stage: CONSTANTS.STAGE_SPLASH,
+    });
+  };
+
   const handleContinue = () => {
     // get state
     let activeScores = gameState.activeScores;
@@ -82,53 +95,67 @@ const Playing = () => {
             <li>Anywhere else = 0</li>
           </ul>
         </div>
-        <h1>
-          Game <strong>{gameState.gameNumber}</strong> of{" "}
-          <strong>{CONSTANTS.MAX_GAMES}</strong>
-        </h1>
-        <h2>
-          Round <strong>{gameState.roundNumber}</strong> of{" "}
-          <strong>{CONSTANTS.MAX_ROUNDS}</strong>
-        </h2>
+
+        {gameState.gameNumber <= CONSTANTS.MAX_GAMES && (
+          <>
+            <h1>
+              Game <strong>{gameState.gameNumber}</strong> of{" "}
+              <strong>{CONSTANTS.MAX_GAMES}</strong>
+            </h1>
+            <h2>
+              Round <strong>{gameState.roundNumber}</strong> of{" "}
+              <strong>{CONSTANTS.MAX_ROUNDS}</strong>
+            </h2>
+          </>
+        )}
       </div>
 
-      <div className="playing__dart-scores">
-        <div className="playing__dart-score-row">
-          <comp.DartScore
-            dartNumber={0}
-            activeScore={gameState.activeScores[0]}
-            scoreOptions={[0, 1, 3, 5]}
-          ></comp.DartScore>
+      {gameState.gameNumber <= CONSTANTS.MAX_GAMES && (
+        <div>
+          <div className="playing__dart-scores">
+            <div className="playing__dart-score-row">
+              <comp.DartScore
+                dartNumber={0}
+                activeScore={gameState.activeScores[0]}
+                scoreOptions={[0, 1, 3, 5]}
+              ></comp.DartScore>
+            </div>
+            <div className="playing__dart-score-row">
+              <comp.DartScore
+                dartNumber={1}
+                activeScore={gameState.activeScores[1]}
+                scoreOptions={[0, 1, 3, 5]}
+              ></comp.DartScore>
+            </div>
+            <div className="playing__dart-score-row">
+              <comp.DartScore
+                dartNumber={2}
+                activeScore={gameState.activeScores[2]}
+                scoreOptions={[0, 1, 3, 5]}
+              ></comp.DartScore>
+            </div>
+          </div>
+          <div className="playing__buttons">
+            <div className="playing__button">
+              <comp.Button
+                text="Exit"
+                onClick={() => {
+                  handleExit();
+                }}
+              ></comp.Button>
+            </div>
+            <div className="playing__button">
+              <comp.Button
+                onClick={() => {
+                  handleContinue();
+                }}
+                text="Continue"
+                disabled={gameState.continueButtonDisabled}
+              ></comp.Button>
+            </div>
+          </div>
         </div>
-        <div className="playing__dart-score-row">
-          <comp.DartScore
-            dartNumber={1}
-            activeScore={gameState.activeScores[1]}
-            scoreOptions={[0, 1, 3, 5]}
-          ></comp.DartScore>
-        </div>
-        <div className="playing__dart-score-row">
-          <comp.DartScore
-            dartNumber={2}
-            activeScore={gameState.activeScores[2]}
-            scoreOptions={[0, 1, 3, 5]}
-          ></comp.DartScore>
-        </div>
-      </div>
-      <div className="playing__buttons">
-        <div className="playing__button">
-          <comp.Button text="Exit"></comp.Button>
-        </div>
-        <div className="playing__button">
-          <comp.Button
-            onClick={() => {
-              handleContinue();
-            }}
-            text="Continue"
-            disabled={gameState.continueButtonDisabled}
-          ></comp.Button>
-        </div>
-      </div>
+      )}
 
       {gameState.gameStats.length > 0 && (
         <div className="playing__game-stats">

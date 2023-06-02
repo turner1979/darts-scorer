@@ -14,7 +14,7 @@ function App() {
     gameNumber: 1,
     gameStats: [],
     roundNumber: 1,
-    stage: CONSTANTS.STAGE_PLAYING
+    stage: CONSTANTS.STAGE_SPLASH
   });
 
   const gameStateValue = useMemo(

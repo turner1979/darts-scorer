@@ -1,0 +1,14 @@
+@import "../../assets/styles/styles.scss";
+
+.splash {
+
+  &__title,
+  &__icon {
+    margin-bottom: 16px;
+  }
+
+  &__title {
+    @include fontHeading1();
+  }
+  
+}
