@@ -1,0 +1,62 @@
+@import "../../assets/styles/styles.scss";
+
+.dart-score {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &__number {
+    width: 48px;
+    height: 48px;
+    margin-right: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    background: $colour-eerie-black;
+    border-radius: 4px;
+
+    span {
+      position: absolute;
+      top: 5px;
+      right: 0;
+      color: white;
+      width: 20px;
+      height: 20px;
+      border-radius: 10px;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      font-weight: 500;
+      font-size: 0.875rem;
+    }
+  }
+
+  &__scores {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__score {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 48px;
+    height: 48px;
+    background:#efefef;
+    margin-right: 8px;
+    border-radius: 4px;
+    font-size: 1.25rem;
+    font-weight: 500;
+
+    &--active {
+      background: $colour-engineering-orange;
+      color: $colour-white;
+    }
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}

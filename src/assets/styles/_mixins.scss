@@ -1,0 +1,21 @@
+@mixin fontHeading1() {
+  font-size: 1.5rem;
+  font-weight: 300;
+
+  strong {
+    font-weight: 500;
+  }
+}
+
+@mixin fontHeading2() {
+  font-size: 1rem;
+  font-weight: 300;
+
+  strong {
+    font-weight: 500;
+  }
+}
+
+@mixin fontLink() {
+  font-size: 0.875em;
+}

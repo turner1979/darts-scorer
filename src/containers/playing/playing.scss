@@ -1,0 +1,55 @@
+@import "../../assets/styles/styles.scss";
+
+.playing {
+  &__header {
+    margin-bottom: 16px;
+
+    h1 {
+      @include fontHeading1();
+    }
+
+    h2 {
+      @include fontHeading2();
+    }
+  }
+
+  &__scoring {
+    margin-bottom: 16px;
+    background: #efefef;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 16px;
+
+    p {
+      margin-bottom: 8px;
+    }
+  }
+
+  &__dart-scores {
+    margin-bottom: 16px;
+  }
+
+  &__dart-score-row {
+    margin-bottom: 8px;
+  }
+
+  &__buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+
+  &__button {
+    margin-right: 8px;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+
+  &__game-stats {
+    margin-bottom: 16px;
+  }
+  
+}

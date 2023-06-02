@@ -1,0 +1,29 @@
+@import '../../assets/styles/styles.scss';
+
+.button {
+  border: 1px solid #222;
+  background: $button-bg;
+  color: $button-colour;
+  border-radius: 64px;
+  padding: 0 0.75rem;
+  min-height: 40px;
+  text-transform: uppercase;
+  display: inline-flex;
+  justify-content: flex-start;
+  align-items: center;
+  @include fontLink();
+
+  p {
+    margin: 0;
+
+    &.has-icon {
+      margin-left: 8px;
+    }
+  }
+
+  &:disabled {
+    background: transparent;
+    color: #222;
+  }
+
+}

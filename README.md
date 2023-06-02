@@ -1,4 +1,6 @@
-# Getting Started with Create React App
+# Dart Scorer
+
+Darts scorer is a React app used to keep track of scores during a practice game I call centered.
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 

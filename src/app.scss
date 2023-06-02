@@ -1,0 +1,15 @@
+@import '../src/assets/styles/styles.scss';
+ 
+.app {
+  height: 100%;
+
+  &__aligner {
+    width: 100%;
+    max-width: 600px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+}
