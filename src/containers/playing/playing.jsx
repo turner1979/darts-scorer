@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import * as CONSTANTS from "../../constants/game.constants";
 import * as comp from "../../components";
 import { GameStateContext } from "../../context";
@@ -8,17 +8,28 @@ import "./playing.scss";
 const Playing = () => {
   const { gameState, setGameState } = useContext(GameStateContext);
 
-  const handleExit = () => {
-    setGameState({
+  const handleEndGame = () => {
+    const newGameState = {
       activeScores: [false, false, false],
       continueButtonDisabled: true,
       currentGame: [],
       gameHistory: [],
       gameNumber: 1,
       gameStats: [],
+      overviewStats: {
+        gamesPlayed: 0,
+        lowestGameScore: 0,
+        highestGameScore: 0,
+        averageGameScore: 0,
+        totalSingleBulls: 0,
+        totalDoubleBulls: 0
+      },
       roundNumber: 1,
       stage: CONSTANTS.STAGE_SPLASH,
-    });
+    };
+
+    setGameState(newGameState);
+    localStorage.setItem(CONSTANTS.GAME_STATE_LS_KEY, JSON.stringify(newGameState));
   };
 
   const handleContinue = () => {
@@ -29,6 +40,7 @@ const Playing = () => {
     let gameNumber = gameState.gameNumber;
     let gameStats = gameState.gameStats;
     let roundNumber = gameState.roundNumber;
+    let newOverviewStats = gameState.overviewStats;
 
     // modify values
     currentGame.push([...activeScores]);
@@ -38,7 +50,6 @@ const Playing = () => {
       gameHistory.push({ game: `g${gameNumber}`, rounds: currentGame });
 
       // add game stats to state
-
       // create object to hold game stats
       const stats = {
         gameNumber,
@@ -65,42 +76,68 @@ const Playing = () => {
       // update the state with gameStats (push gameStats object to state array)
       gameStats.push(stats);
 
+      // Overview stats
+      newOverviewStats = {
+        gamesPlayed: 0,
+        lowestGameScore: 0,
+        highestGameScore: 0,
+        averageGameScore: 0,
+        totalSingleBulls: 0,
+        totalDoubleBulls: 0
+      };
+      
+      // gamesPlayed
+      newOverviewStats.gamesPlayed = gameState.gameStats.length;
+
+      // lowestGameScore and highestGameScore
+      const totalScores = [];
+      let totalSingleBullsForAllGames = 0;
+      let totalDoubleBullsForAllGames = 0;
+      gameState.gameStats.map((gameStat) => {
+        totalScores.push(gameStat.totalScore);
+        totalSingleBullsForAllGames += gameStat.totalSingleBulls;
+        totalDoubleBullsForAllGames += gameStat.totalDoubleBulls;
+      });
+      newOverviewStats.lowestGameScore = Math.min(...totalScores);
+      newOverviewStats.highestGameScore = Math.max(...totalScores);
+
+      // averageGameScore
+      let total = 0;
+      totalScores.forEach((totalScore) => total += totalScore);
+      newOverviewStats.averageGameScore = (total / newOverviewStats.gamesPlayed).toFixed(2);
+
+      // totalSingleBulls and totalDoubleBulls
+      newOverviewStats.totalSingleBulls = totalSingleBullsForAllGames;
+      newOverviewStats.totalDoubleBulls = totalDoubleBullsForAllGames;
+
       // reset current game now stats have been saved
       currentGame = [];
       gameNumber++;
     }
 
-    // update the state
-    setGameState({
+    // set new gameState
+    const newGameState = {
       ...gameState,
       activeScores: [false, false, false],
       currentGame,
       continueButtonDisabled: true,
       gameNumber,
-      roundNumber,
-    });
+      overviewStats: newOverviewStats,
+      roundNumber
+    };
+    setGameState(newGameState);
+
+    // save new gameState to local storage
+    localStorage.setItem(CONSTANTS.GAME_STATE_LS_KEY, JSON.stringify(newGameState));
   };
 
   return (
     <div className="playing">
       <div className="playing__header">
-        <div className="playing__scoring">
-          <p>
-            <strong>Scoring</strong> per dart
-          </p>
-          <ul>
-            <li>Double Bull = 5</li>
-            <li>Single Bull = 3</li>
-            <li>Between Single Bull to Treble = 1</li>
-            <li>Anywhere else = 0</li>
-          </ul>
-        </div>
-
         {gameState.gameNumber <= CONSTANTS.MAX_GAMES && (
           <>
             <h1>
-              Game <strong>{gameState.gameNumber}</strong> of{" "}
-              <strong>{CONSTANTS.MAX_GAMES}</strong>
+              Game <strong>{gameState.gameNumber}</strong>
             </h1>
             <h2>
               Round <strong>{gameState.roundNumber}</strong> of{" "}
@@ -138,9 +175,9 @@ const Playing = () => {
           <div className="playing__buttons">
             <div className="playing__button">
               <comp.Button
-                text="Exit"
+                text="End Game"
                 onClick={() => {
-                  handleExit();
+                  handleEndGame();
                 }}
               ></comp.Button>
             </div>
@@ -157,14 +194,20 @@ const Playing = () => {
         </div>
       )}
 
-      {gameState.gameStats.length > 0 && (
-        <div className="playing__game-stats">
-          <p>
-            <strong>Game Stats</strong>
-          </p>
-          <comp.GameStats gameStats={[...gameState.gameStats]}></comp.GameStats>
+      <div className="playing__scores">
+        <div>
+          { gameState.gameStats.length < 1 && <><p>No games played yet</p></>}
+          { [...gameState.gameStats].map((gameStat, index) => <comp.GameStat key={`game-stat${index}`} gameStat={gameStat}></comp.GameStat> )}
         </div>
-      )}
+        <div>
+          <comp.Stat text={"Games Played"} value={gameState.overviewStats.gamesPlayed}></comp.Stat>
+          <comp.Stat text={"Lowest"} value={gameState.overviewStats.lowestGameScore}></comp.Stat>
+          <comp.Stat text={"Highest"} value={gameState.overviewStats.highestGameScore}></comp.Stat>
+          <comp.Stat text={"Average"} value={gameState.overviewStats.averageGameScore}></comp.Stat>
+          <comp.Stat text={"Total Single Bulls"} value={gameState.overviewStats.totalSingleBulls}></comp.Stat>
+          <comp.Stat text={"Total Double Bulls"} value={gameState.overviewStats.totalDoubleBulls}></comp.Stat>
+        </div>
+      </div>
 
       {gameState.gameHistory.length > 0 && (
         <div>

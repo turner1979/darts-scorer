@@ -22,6 +22,9 @@ const Splash = () => {
       <div className="splash__icon">
         <comp.Icon name="dartboard" width={128} fill={"#aa0000"}></comp.Icon>
       </div>
+      <div className="splash__instructions">
+        <comp.Instructions></comp.Instructions>
+      </div>
       <div className="splash__button">
         <comp.Button
           onClick={() => {

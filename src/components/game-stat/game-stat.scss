@@ -1,0 +1,39 @@
+@import "../../assets/styles/styles.scss";
+
+.game-stat {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+
+  > div {
+    margin-right: 8px;
+  }
+
+  .game-stat__total {
+    font-size: 1.5rem;
+    font-weight: 500;
+    min-width: 50px;
+  }
+
+  .game-stat__total-bull {
+    span {
+      width: 24px;
+      height: 24px;
+      border-radius: 12px;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      color: $colour-white;
+      font-weight: 500;
+    }
+
+    &--single span {
+      background: $colour-pigment-green;
+    }
+
+    &--double span {
+      background: $colour-engineering-orange;
+    }
+  }
+
+}
