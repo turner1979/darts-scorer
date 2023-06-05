@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/darts-scorer/static/css/main.77f2416a.css",
-    "main.js": "/darts-scorer/static/js/main.071dae1d.js",
+    "main.js": "/darts-scorer/static/js/main.ae21b9ea.js",
     "static/js/787.1afa92c8.chunk.js": "/darts-scorer/static/js/787.1afa92c8.chunk.js",
     "index.html": "/darts-scorer/index.html",
     "main.77f2416a.css.map": "/darts-scorer/static/css/main.77f2416a.css.map",
-    "main.071dae1d.js.map": "/darts-scorer/static/js/main.071dae1d.js.map",
+    "main.ae21b9ea.js.map": "/darts-scorer/static/js/main.ae21b9ea.js.map",
     "787.1afa92c8.chunk.js.map": "/darts-scorer/static/js/787.1afa92c8.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.77f2416a.css",
-    "static/js/main.071dae1d.js"
+    "static/js/main.ae21b9ea.js"
   ]
 }
