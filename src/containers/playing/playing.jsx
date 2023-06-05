@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import * as CONSTANTS from "../../constants/game.constants";
 import * as comp from "../../components";
 import { GameStateContext } from "../../context";
@@ -7,6 +7,7 @@ import "./playing.scss";
 
 const Playing = () => {
   const { gameState, setGameState } = useContext(GameStateContext);
+  const [activeTab, setActiveTab] = useState(0);
 
   const handleEndGame = () => {
     const newGameState = {
@@ -22,14 +23,17 @@ const Playing = () => {
         highestGameScore: 0,
         averageGameScore: 0,
         totalSingleBulls: 0,
-        totalDoubleBulls: 0
+        totalDoubleBulls: 0,
       },
       roundNumber: 1,
       stage: CONSTANTS.STAGE_SPLASH,
     };
 
     setGameState(newGameState);
-    localStorage.setItem(CONSTANTS.GAME_STATE_LS_KEY, JSON.stringify(newGameState));
+    localStorage.setItem(
+      CONSTANTS.GAME_STATE_LS_KEY,
+      JSON.stringify(newGameState)
+    );
   };
 
   const handleContinue = () => {
@@ -83,9 +87,9 @@ const Playing = () => {
         highestGameScore: 0,
         averageGameScore: 0,
         totalSingleBulls: 0,
-        totalDoubleBulls: 0
+        totalDoubleBulls: 0,
       };
-      
+
       // gamesPlayed
       newOverviewStats.gamesPlayed = gameState.gameStats.length;
 
@@ -103,8 +107,10 @@ const Playing = () => {
 
       // averageGameScore
       let total = 0;
-      totalScores.forEach((totalScore) => total += totalScore);
-      newOverviewStats.averageGameScore = (total / newOverviewStats.gamesPlayed).toFixed(2);
+      totalScores.forEach((totalScore) => (total += totalScore));
+      newOverviewStats.averageGameScore = (
+        total / newOverviewStats.gamesPlayed
+      ).toFixed(2);
 
       // totalSingleBulls and totalDoubleBulls
       newOverviewStats.totalSingleBulls = totalSingleBullsForAllGames;
@@ -123,106 +129,151 @@ const Playing = () => {
       continueButtonDisabled: true,
       gameNumber,
       overviewStats: newOverviewStats,
-      roundNumber
+      roundNumber,
     };
     setGameState(newGameState);
 
     // save new gameState to local storage
-    localStorage.setItem(CONSTANTS.GAME_STATE_LS_KEY, JSON.stringify(newGameState));
+    localStorage.setItem(
+      CONSTANTS.GAME_STATE_LS_KEY,
+      JSON.stringify(newGameState)
+    );
+  };
+
+  const handleTabChange = (tabIndex) => {
+    setActiveTab(tabIndex);
   };
 
   return (
     <div className="playing">
       <div className="playing__header">
-        {gameState.gameNumber <= CONSTANTS.MAX_GAMES && (
-          <>
-            <h1>
-              Game <strong>{gameState.gameNumber}</strong>
-            </h1>
-            <h2>
-              Round <strong>{gameState.roundNumber}</strong> of{" "}
-              <strong>{CONSTANTS.MAX_ROUNDS}</strong>
-            </h2>
-          </>
+        <h1>
+          Game <strong>{gameState.gameNumber}</strong>
+        </h1>
+        <h2>
+          Round <strong>{gameState.roundNumber}</strong> of{" "}
+          <strong>{CONSTANTS.MAX_ROUNDS}</strong>
+        </h2>
+      </div>
+
+      <div>
+        <div className="playing__dart-scores">
+          <div className="playing__dart-score-row">
+            <comp.DartScore
+              dartNumber={0}
+              activeScore={gameState.activeScores[0]}
+              scoreOptions={[0, 1, 3, 5]}
+            ></comp.DartScore>
+          </div>
+          <div className="playing__dart-score-row">
+            <comp.DartScore
+              dartNumber={1}
+              activeScore={gameState.activeScores[1]}
+              scoreOptions={[0, 1, 3, 5]}
+            ></comp.DartScore>
+          </div>
+          <div className="playing__dart-score-row">
+            <comp.DartScore
+              dartNumber={2}
+              activeScore={gameState.activeScores[2]}
+              scoreOptions={[0, 1, 3, 5]}
+            ></comp.DartScore>
+          </div>
+        </div>
+        <div className="playing__buttons">
+          <div className="playing__button">
+            <comp.Button
+              text="End Game"
+              onClick={() => {
+                handleEndGame();
+              }}
+            ></comp.Button>
+          </div>
+          <div className="playing__button">
+            <comp.Button
+              onClick={() => {
+                handleContinue();
+              }}
+              text="Continue"
+              disabled={gameState.continueButtonDisabled}
+            ></comp.Button>
+          </div>
+        </div>
+      </div>
+
+      <comp.Tabs
+        activeTab={activeTab}
+        tabs={["Scores", "Stats", "Freq", "Data"]}
+        onTabChange={(index) => handleTabChange(index)}
+      >
+        {activeTab === 0 && gameState.gameStats.length === 0 && (
+          <div>
+            <p>No games played yet.</p>
+          </div>
         )}
-      </div>
-
-      {gameState.gameNumber <= CONSTANTS.MAX_GAMES && (
-        <div>
-          <div className="playing__dart-scores">
-            <div className="playing__dart-score-row">
-              <comp.DartScore
-                dartNumber={0}
-                activeScore={gameState.activeScores[0]}
-                scoreOptions={[0, 1, 3, 5]}
-              ></comp.DartScore>
-            </div>
-            <div className="playing__dart-score-row">
-              <comp.DartScore
-                dartNumber={1}
-                activeScore={gameState.activeScores[1]}
-                scoreOptions={[0, 1, 3, 5]}
-              ></comp.DartScore>
-            </div>
-            <div className="playing__dart-score-row">
-              <comp.DartScore
-                dartNumber={2}
-                activeScore={gameState.activeScores[2]}
-                scoreOptions={[0, 1, 3, 5]}
-              ></comp.DartScore>
-            </div>
-          </div>
-          <div className="playing__buttons">
-            <div className="playing__button">
-              <comp.Button
-                text="End Game"
-                onClick={() => {
-                  handleEndGame();
-                }}
-              ></comp.Button>
-            </div>
-            <div className="playing__button">
-              <comp.Button
-                onClick={() => {
-                  handleContinue();
-                }}
-                text="Continue"
-                disabled={gameState.continueButtonDisabled}
-              ></comp.Button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      <div className="playing__scores">
-        <div>
-          { gameState.gameStats.length < 1 && <><p>No games played yet</p></>}
-          { [...gameState.gameStats].map((gameStat, index) => <comp.GameStat key={`game-stat${index}`} gameStat={gameStat}></comp.GameStat> )}
-        </div>
-        <div>
-          <comp.Stat text={"Games Played"} value={gameState.overviewStats.gamesPlayed}></comp.Stat>
-          <comp.Stat text={"Lowest"} value={gameState.overviewStats.lowestGameScore}></comp.Stat>
-          <comp.Stat text={"Highest"} value={gameState.overviewStats.highestGameScore}></comp.Stat>
-          <comp.Stat text={"Average"} value={gameState.overviewStats.averageGameScore}></comp.Stat>
-          <comp.Stat text={"Total Single Bulls"} value={gameState.overviewStats.totalSingleBulls}></comp.Stat>
-          <comp.Stat text={"Total Double Bulls"} value={gameState.overviewStats.totalDoubleBulls}></comp.Stat>
-        </div>
-      </div>
-
-      {gameState.gameHistory.length > 0 && (
-        <div>
-          <p>
-            <strong>History:</strong>
-          </p>
-          {gameState.gameHistory.map((history, historyIndex) => {
-            return (
-              <div key={`history_${historyIndex}`}>
-                {JSON.stringify(history)}
+        {activeTab === 0 && gameState.gameStats.length > 0 && (
+          <div className="playing__scores">
+            {[...gameState.gameStats].map((gameStat, index) => (
+              <div key={`game-stat${index}`}>
+                <comp.GameStat gameStat={gameStat}></comp.GameStat>
               </div>
-            );
-          })}
-        </div>
-      )}
+            ))}
+          </div>
+        )}
+
+        {activeTab === 1 && (
+          <div>
+            <comp.Stat
+              text={"Games Played"}
+              value={gameState.overviewStats.gamesPlayed}
+            ></comp.Stat>
+            <comp.Stat
+              text={"Lowest"}
+              value={gameState.overviewStats.lowestGameScore}
+            ></comp.Stat>
+            <comp.Stat
+              text={"Highest"}
+              value={gameState.overviewStats.highestGameScore}
+            ></comp.Stat>
+            <comp.Stat
+              text={"Average"}
+              value={gameState.overviewStats.averageGameScore}
+            ></comp.Stat>
+            <comp.Stat
+              text={"Total Single Bulls"}
+              value={gameState.overviewStats.totalSingleBulls}
+            ></comp.Stat>
+            <comp.Stat
+              text={"Total Double Bulls"}
+              value={gameState.overviewStats.totalDoubleBulls}
+            ></comp.Stat>
+          </div>
+        )}
+
+        {activeTab === 2 && gameState.gameHistory.length === 0 && (
+          <div>
+            <p>No games played yet.</p>
+          </div>
+        )}
+        {activeTab === 2 && gameState.gameStats.length > 0 && (
+          <div>Frequency coming soon!</div>
+        )}
+
+        {activeTab === 3 && gameState.gameHistory.length > 0 && (
+          <div>
+            <p>
+              <strong>History:</strong>
+            </p>
+            {gameState.gameHistory.map((history, historyIndex) => {
+              return (
+                <div key={`history_${historyIndex}`}>
+                  {JSON.stringify(history)}
+                </div>
+              );
+            })}
+          </div>
+        )}
+      </comp.Tabs>
     </div>
   );
 };

@@ -18,13 +18,7 @@
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     column-gap: 1rem;
-    margin-bottom: 16px;
     text-align: left;
-
-    > div {
-      border: 1px solid #222;
-      padding: 1rem;
-    }
   }
 
   &__dart-scores {

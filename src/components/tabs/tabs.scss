@@ -1,0 +1,36 @@
+@import "../../assets/styles/styles.scss";
+
+.tabs {
+  text-align: left;
+
+  &__links {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center; 
+  }
+
+  &__link {
+    border: 1px solid #efefef;
+    border-top: none;
+    border-bottom: none;
+    background: #efefef;
+    margin-right: 2px;
+    padding: 16px;
+    cursor: pointer;
+    z-index: 1000;
+
+    &--active {
+      border: 1px solid $colour-eerie-black;
+      background: white;
+      border-bottom: none;
+      margin-bottom: -2px;
+      padding: 16px;
+    }
+  }
+
+  &__content {
+    border: 1px solid $colour-eerie-black;
+    padding: 1rem;
+  }
+
+}

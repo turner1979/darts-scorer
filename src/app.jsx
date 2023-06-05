@@ -45,7 +45,6 @@ function App() {
           <div className="app__aligner">
             { gameState.stage === CONSTANTS.STAGE_SPLASH && <containers.Splash></containers.Splash> }
             { gameState.stage === CONSTANTS.STAGE_PLAYING && <containers.Playing></containers.Playing> }
-            { gameState.stage === CONSTANTS.STAGE_SUMMARY && <containers.Summary></containers.Summary> }
           </div>
         </comp.Content>
       </GameStateContext.Provider>

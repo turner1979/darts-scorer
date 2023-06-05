@@ -6,3 +6,4 @@ export { default as GameStat } from './game-stat/game-stat';
 export { default as Icon } from './icon/icon';
 export { default as Instructions } from './instructions/instructions';
 export { default as Stat } from './stat/stat';
+export { default as Tabs } from './tabs/tabs';
