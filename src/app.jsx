@@ -22,6 +22,7 @@ function App() {
       totalDoubleBulls: 0
     },
     roundNumber: 1,
+    scoreFrequency: [],
     stage: CONSTANTS.STAGE_SPLASH
   });
 

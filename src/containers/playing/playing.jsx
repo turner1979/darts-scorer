@@ -23,10 +23,11 @@ const Playing = () => {
         highestGameScore: 0,
         averageGameScore: 0,
         totalSingleBulls: 0,
-        totalDoubleBulls: 0,
+        totalDoubleBulls: 0
       },
       roundNumber: 1,
-      stage: CONSTANTS.STAGE_SPLASH,
+      scoreFrequency: [],
+      stage: CONSTANTS.STAGE_SPLASH
     };
 
     setGameState(newGameState);
@@ -45,6 +46,7 @@ const Playing = () => {
     let gameStats = gameState.gameStats;
     let roundNumber = gameState.roundNumber;
     let newOverviewStats = gameState.overviewStats;
+    let scoreFreqency = gameState.scoreFreqency;
 
     // modify values
     currentGame.push([...activeScores]);
@@ -75,7 +77,8 @@ const Playing = () => {
       stats.totalSingleBulls = totalSingleBulls;
       stats.totalDoubleBulls = totalDoubleBulls;
 
-      // TODO round score total: (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15)
+      // get score frequencies
+      scoreFreqency = Utils.getScoreFrequency(gameState.gameHistory);
 
       // update the state with gameStats (push gameStats object to state array)
       gameStats.push(stats);
@@ -130,6 +133,7 @@ const Playing = () => {
       gameNumber,
       overviewStats: newOverviewStats,
       roundNumber,
+      scoreFreqency,
     };
     setGameState(newGameState);
 
@@ -256,7 +260,18 @@ const Playing = () => {
           </div>
         )}
         {activeTab === 2 && gameState.gameStats.length > 0 && (
-          <div>Frequency coming soon!</div>
+          <div>
+            {gameState.scoreFreqency.map((sf, index) => {
+              return (
+                <comp.ScoreFrequency
+                  key={`score-frequency_${index}`}
+                  score={sf.score}
+                  percentage={sf.percentage}
+                  frequency={sf.frequency}
+                ></comp.ScoreFrequency>
+              );
+            })}
+          </div>
         )}
 
         {activeTab === 3 && gameState.gameHistory.length > 0 && (

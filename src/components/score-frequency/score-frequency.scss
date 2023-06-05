@@ -1,0 +1,27 @@
+.score-frequency {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  &__score {
+    min-width: 30px;
+  }
+
+  &__percentage {
+    background: #efefef;
+    width: 100%;
+    height: 16px;
+
+    span {
+      display: inline-block;
+      height: 16px;
+      background: #aa0000;
+    }
+  }
+
+  &__frequency {
+    min-width: 30px;
+    margin-left: 8px;
+  }
+
+}

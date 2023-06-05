@@ -5,5 +5,6 @@ export { default as GameStats } from './game-stats/game-stats';
 export { default as GameStat } from './game-stat/game-stat';
 export { default as Icon } from './icon/icon';
 export { default as Instructions } from './instructions/instructions';
+export { default as ScoreFrequency } from './score-frequency/score-frequency';
 export { default as Stat } from './stat/stat';
 export { default as Tabs } from './tabs/tabs';
