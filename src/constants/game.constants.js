@@ -1,5 +1,5 @@
 const GAME_STATE_LS_KEY = 'dart-scorer-game-state';
-const MAX_ROUNDS = 2;
+const MAX_ROUNDS = 10;
 const STAGE_PLAYING = 'STAGE_PLAYING';
 const STAGE_SPLASH = 'STAGE_SPLASH';
 
