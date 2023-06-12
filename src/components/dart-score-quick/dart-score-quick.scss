@@ -1,0 +1,22 @@
+.dart-score-quick {
+  display: inline-block;
+  background: #efefef;
+  margin-right: 8px;
+  border-radius: 4px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+
+  p {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+
+    strong {
+      margin-right: 8px;
+    }
+
+    span {
+      font-size: 0.75rem;
+    }
+  }
+}

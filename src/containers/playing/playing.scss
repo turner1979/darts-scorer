@@ -29,6 +29,12 @@
     margin-bottom: 8px;
   }
 
+  &__dart-scores-quick {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
   &__buttons {
     display: flex;
     justify-content: center;

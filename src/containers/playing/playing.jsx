@@ -23,11 +23,11 @@ const Playing = () => {
         highestGameScore: 0,
         averageGameScore: 0,
         totalSingleBulls: 0,
-        totalDoubleBulls: 0
+        totalDoubleBulls: 0,
       },
       roundNumber: 1,
       scoreFrequency: [],
-      stage: CONSTANTS.STAGE_SPLASH
+      stage: CONSTANTS.STAGE_SPLASH,
     };
 
     setGameState(newGameState);
@@ -182,6 +182,16 @@ const Playing = () => {
               activeScore={gameState.activeScores[2]}
               scoreOptions={[0, 1, 3, 5]}
             ></comp.DartScore>
+          </div>
+          <div className="playing__dart-scores-quick">
+            <comp.DartScoreQuick
+              totalScore={3}
+              scores={[1, 1, 1]}
+            ></comp.DartScoreQuick>
+            <comp.DartScoreQuick
+              totalScore={5}
+              scores={[3, 1, 1]}
+            ></comp.DartScoreQuick>
           </div>
         </div>
         <div className="playing__buttons">
