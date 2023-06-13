@@ -1,6 +1,12 @@
 @import "../../assets/styles/styles.scss";
 
 .playing {
+
+  &__end-game {
+    cursor: pointer;
+    text-align: right;
+  }
+
   &__header {
     margin-bottom: 16px;
 
@@ -36,18 +42,7 @@
   }
 
   &__buttons {
-    display: flex;
-    justify-content: center;
-    align-items: center;
     margin-bottom: 16px;
-  }
-
-  &__button {
-    margin-right: 8px;
-
-    &:last-child {
-      margin-right: 0;
-    }
   }
 
   &__game-stats {

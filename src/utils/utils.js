@@ -24,7 +24,6 @@ const getScoreFrequency = (gameHistory) => {
 
   // find the highest frequency and work out percentages relative to this value
   const highestFrequency = Math.max(...frequencies);
-  console.log(highestFrequency);
   const scoreFrequency = [];
   frequencies.map((frequency, index) => {
     const percentage = (100 / highestFrequency) * frequency;

@@ -150,12 +150,19 @@ const Playing = () => {
 
   return (
     <div className="playing">
+      <div
+        className="playing__end-game"
+        onClick={() => {
+          handleEndGame();
+        }}
+      >
+        <comp.Icon name="close" width={48} fill={"#222"}></comp.Icon>
+      </div>
+
       <div className="playing__header">
-        <h1>
-          Game <strong>{gameState.gameNumber}</strong>
-        </h1>
         <h2>
-          Round <strong>{gameState.roundNumber}</strong> of{" "}
+          <strong>Game {gameState.gameNumber}</strong>&nbsp;
+           Round <strong>{gameState.roundNumber}</strong> of{" "}
           <strong>{CONSTANTS.MAX_ROUNDS}</strong>
         </h2>
       </div>
@@ -195,23 +202,13 @@ const Playing = () => {
           </div>
         </div>
         <div className="playing__buttons">
-          <div className="playing__button">
-            <comp.Button
-              text="End Game"
-              onClick={() => {
-                handleEndGame();
-              }}
-            ></comp.Button>
-          </div>
-          <div className="playing__button">
-            <comp.Button
-              onClick={() => {
-                handleContinue();
-              }}
-              text="Continue"
-              disabled={gameState.continueButtonDisabled}
-            ></comp.Button>
-          </div>
+          <comp.Button
+            onClick={() => {
+              handleContinue();
+            }}
+            text="Continue"
+            disabled={gameState.continueButtonDisabled}
+          ></comp.Button>
         </div>
       </div>
 
@@ -294,6 +291,15 @@ const Playing = () => {
                 <div key={`history_${historyIndex}`}>
                   {JSON.stringify(history)}
                 </div>
+              );
+            })}
+
+            <p style={{ marginTop: "16px" }}>
+              <strong>Raw</strong>
+            </p>
+            {[...gameState.gameStats].map((gameStat, index) => {
+              return (
+                <span key={`raw_${index}`}>{gameStat.totalScore}&nbsp;</span>
               );
             })}
           </div>
